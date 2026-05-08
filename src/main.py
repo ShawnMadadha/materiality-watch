@@ -222,6 +222,8 @@ async def process_url(
             Actor.log.warning(f"[{url_hash}] empty content")
             return None
 
+        await Actor.charge("url-checked")
+
         previous = await Actor.get_value(snapshot_key)
 
         # First run for this URL — establish baseline silently
@@ -268,6 +270,8 @@ async def process_url(
         if not analysis.get("is_material"):
             Actor.log.info(f"[{url_hash}] change detected but not material per criteria; suppressed")
             return None
+
+        await Actor.charge("material-change-detected")
 
         change_record = {
             "url": url,
@@ -321,6 +325,7 @@ async def main() -> None:
             )
             Actor.log.info("No criteria provided — using default materiality rules")
 
+        await Actor.charge("run-started")
         Actor.log.info(f"Watching {len(urls)} URL(s) against criteria: {criteria[:200]}")
 
         material_changes: list[dict[str, Any]] = []
@@ -351,6 +356,7 @@ async def main() -> None:
                     digest_text = await write_digest(
                         http, anthropic_key, digest_model, criteria, material_changes
                     )
+                    await Actor.charge("digest-generated")
                     await Actor.push_data({
                         "type": "digest",
                         "generated_at": datetime.now(timezone.utc).isoformat(),
