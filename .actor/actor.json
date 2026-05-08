@@ -1,0 +1,52 @@
+{
+    "actorSpecification": 1,
+    "name": "materiality-watch",
+    "title": "Materiality Watch — Criteria-Filtered Change Monitor",
+    "description": "Monitor multiple URLs on a schedule. Define what matters in plain English and Claude AI filters every diff against YOUR criteria. Portfolio mode, consolidated digests, per-URL timeline, webhook support.",
+    "version": "0.1",
+    "buildTag": "latest",
+    "input": "./input_schema.json",
+    "dockerfile": "./Dockerfile",
+    "readme": "../README.md",
+    "seoTitle": "Materiality Watch: AI-Filtered Website Change Monitor with Custom Criteria",
+    "seoDescription": "Monitor multiple URLs on a schedule. Define what changes matter to YOU in plain English — pricing, API deprecations, leadership, policy — and Claude AI filters every diff against your criteria. Get one consolidated digest per run, not 50 noisy alerts. Per-URL change timeline, webhook support, portfolio mode.",
+    "categories": ["MONITORING", "AI"],
+    "storages": {
+        "dataset": {
+            "actorSpecification": 1,
+            "fields": {},
+            "views": {
+                "changes": {
+                    "title": "Material changes",
+                    "transformation": {
+                        "fields": ["detected_at", "url", "significance", "categories", "summary"]
+                    },
+                    "display": {
+                        "component": "table",
+                        "properties": {
+                            "detected_at": { "label": "When", "format": "date" },
+                            "url":         { "label": "URL" },
+                            "significance":{ "label": "Sig" },
+                            "categories":  { "label": "Tags" },
+                            "summary":     { "label": "What changed" }
+                        }
+                    }
+                },
+                "digests": {
+                    "title": "Per-run digests",
+                    "transformation": {
+                        "fields": ["generated_at", "n_changes", "digest"]
+                    },
+                    "display": {
+                        "component": "table",
+                        "properties": {
+                            "generated_at": { "label": "Run", "format": "date" },
+                            "n_changes":    { "label": "# Changes" },
+                            "digest":       { "label": "Digest" }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

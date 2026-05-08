@@ -1,0 +1,11 @@
+.git
+.gitignore
+.venv
+__pycache__
+*.pyc
+.DS_Store
+README.md
+.idea
+.vscode
+storage
+apify_storage

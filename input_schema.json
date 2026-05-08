@@ -1,0 +1,59 @@
+{
+    "title": "Materiality Watch",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "urls": {
+            "title": "URLs to watch",
+            "type": "array",
+            "description": "The list of webpages to monitor in this run. Each URL is tracked independently with its own snapshot history.",
+            "editor": "stringList",
+            "prefill": [
+                "https://www.anthropic.com/pricing",
+                "https://www.anthropic.com/news"
+            ],
+            "items": { "type": "string" }
+        },
+        "criteria": {
+            "title": "Materiality criteria",
+            "type": "string",
+            "description": "Plain-English description of what kinds of changes you actually want to be alerted about. Claude filters every detected diff against this. Be specific — vague criteria let trivia through. Examples: 'pricing or plan name changes only'; 'API deprecations, schema changes, or new endpoints'; 'leadership names on the about page'; 'regulatory language changes in the Terms of Service'.",
+            "editor": "textarea",
+            "prefill": "Pricing changes, plan or tier changes, new product launches, leadership changes, API deprecations or breaking changes, and changes to Terms or Privacy Policy. Ignore copy polish, blog posts, social embeds, navigation tweaks, and timestamps."
+        },
+        "anthropic_api_key": {
+            "title": "Anthropic API key",
+            "type": "string",
+            "description": "Required for criteria-based filtering and digest generation. Without it, every diff is reported with default significance (no filtering, no digest).",
+            "editor": "textfield",
+            "isSecret": true
+        },
+        "webhook_url": {
+            "title": "Webhook URL (optional)",
+            "type": "string",
+            "description": "If provided, a single consolidated payload (with digest + all material changes for this run) is POSTed here whenever any material change is detected.",
+            "editor": "textfield"
+        },
+        "emit_digest": {
+            "title": "Emit consolidated digest",
+            "type": "boolean",
+            "description": "If true, generate one synthesized digest across all material changes per run and push it as a separate dataset record.",
+            "default": true
+        },
+        "classify_model": {
+            "title": "Classifier model (advanced)",
+            "type": "string",
+            "description": "Anthropic model used to filter diffs against criteria. Haiku is fast/cheap and works well for this. Override only if you have a reason.",
+            "editor": "textfield",
+            "default": "claude-haiku-4-5-20251001"
+        },
+        "digest_model": {
+            "title": "Digest model (advanced)",
+            "type": "string",
+            "description": "Anthropic model used to write the consolidated digest. Haiku is the default. Use a Sonnet model if you want richer prose.",
+            "editor": "textfield",
+            "default": "claude-haiku-4-5-20251001"
+        }
+    },
+    "required": ["urls"]
+}
