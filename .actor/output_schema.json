@@ -1,0 +1,25 @@
+{
+    "actorOutputSchemaVersion": 1,
+    "title": "Materiality Watch Output",
+    "description": "Per-change records with significance scores, categories, and summaries, plus a consolidated executive digest. Changes are filtered against the user's plain-English materiality criteria — only material changes appear in the output.",
+    "properties": {
+        "materialChanges": {
+            "type": "string",
+            "title": "Material changes",
+            "description": "Structured records of website changes that matched the user's materiality criteria. Each record includes the URL, detection timestamp, significance score (1-5), category tags, a plain-English summary, and a diff excerpt.",
+            "template": "{{links.apiDefaultDatasetUrl}}/items?view=changes"
+        },
+        "digests": {
+            "type": "string",
+            "title": "Executive digests",
+            "description": "Consolidated 3-6 sentence summaries synthesizing all material changes detected in a single run. One digest per run, only generated when material changes exist and emit_digest is enabled.",
+            "template": "{{links.apiDefaultDatasetUrl}}/items?view=digests"
+        },
+        "changeTimelines": {
+            "type": "string",
+            "title": "Per-URL change timelines",
+            "description": "Historical change records per monitored URL, stored in the key-value store. Each URL maintains up to 50 timeline entries with timestamps, significance scores, categories, and summaries.",
+            "template": "{{links.apiDefaultKeyValueStoreUrl}}/keys"
+        }
+    }
+}

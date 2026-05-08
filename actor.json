@@ -8,6 +8,7 @@
     "input": "./input_schema.json",
     "dockerfile": "./Dockerfile",
     "readme": "../README.md",
+    "output": "./output_schema.json",
     "seoTitle": "Materiality Watch: AI-Filtered Website Change Monitor with Custom Criteria",
     "seoDescription": "Monitor multiple URLs on a schedule. Define what changes matter to YOU in plain English — pricing, API deprecations, leadership, policy — and Claude AI filters every diff against your criteria. Get one consolidated digest per run, not 50 noisy alerts. Per-URL change timeline, webhook support, portfolio mode.",
     "categories": ["MONITORING", "AI"],
